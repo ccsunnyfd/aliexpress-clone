@@ -24,14 +24,15 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="fixed z-[-1] h-[100vh] w-full bg-[#F2F2F2]" />
-          <div id="MainLayout" className="fixed z-50 w-full">
+          <div className="fixed top-0 z-50 w-full">
             <TopMenu />
             <MainHeader />
-            <div className="pt-[80px] md:pt-[130px] lg:pt-[150px]" />
-            {children}
-            <Footer />
           </div>
           <MenuOverlay />
+          <div className=" pt-[80px] md:pt-[130px] lg:pt-[150px] ">
+            {children}
+          </div>
+          <Footer />
         </Providers>
       </body>
     </html>
