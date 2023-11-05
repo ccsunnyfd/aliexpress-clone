@@ -7,7 +7,8 @@ type TextInputProps = {
   placeholder: string
   max: number
   inputType: string
-  error: string
+  autoFocus?: boolean
+  error?: string
   inputChangeHandler: React.ChangeEventHandler<HTMLInputElement>
 }
 
@@ -16,6 +17,7 @@ const TextInput = ({
   placeholder,
   max,
   inputType,
+  autoFocus = false,
   error,
   inputChangeHandler,
 }: TextInputProps) => {
@@ -43,6 +45,7 @@ const TextInput = ({
         onBlur={() => setIsFocused(false)}
         type={inputType}
         value={input}
+        autoFocus={autoFocus}
         onChange={(e) => inputChangeHandler(e)}
         autoComplete="off"
       />

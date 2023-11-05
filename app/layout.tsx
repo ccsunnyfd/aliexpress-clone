@@ -6,6 +6,7 @@ import TopMenu from './layouts/TopMenu'
 import MainHeader from './layouts/MainHeader'
 import Footer from './layouts/Footer'
 import MenuOverlay from './layouts/MenuOverlay'
+import AuthOverlay from './auth/Overlay'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,8 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+
+          <AuthOverlay />
         </Providers>
       </body>
     </html>
