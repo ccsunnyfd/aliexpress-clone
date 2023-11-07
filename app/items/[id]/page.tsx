@@ -3,6 +3,7 @@ import { MdStars } from 'react-icons/md'
 import getProductById from '@/app/third-party-requests/prisma/get-product-by-id'
 import PreviewImages from './components/PreviewImages'
 import { Suspense } from 'react'
+import Cart from './components/Cart'
 
 const Page = async ({ params }: { params: { id: number } }) => {
   const product = await getProductById(Number(params.id))
@@ -69,23 +70,9 @@ const Page = async ({ params }: { params: { id: number } }) => {
 
           <div className="py-2" />
 
-          <button
-            // onClick={() => {}}
-            // disabled={isInCart}
-            className="
-                rounded-lg 
-                bg-gradient-to-r 
-                from-[#FF851A] 
-                to-[#FFAC2C] 
-                px-6 
-                py-2 
-                text-lg 
-                font-semibold 
-                text-white
-            "
-          >
-            {/* {isInCart ? <div>Is Added</div> : <div>Add to Cart</div>} */}
-          </button>
+          <Suspense fallback={<div>Loading...</div>}>
+            {product ? <Cart product={product} /> : ''}
+          </Suspense>
         </div>
       </div>
     </div>

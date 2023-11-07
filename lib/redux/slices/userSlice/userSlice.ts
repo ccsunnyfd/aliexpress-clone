@@ -2,8 +2,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserSliceState {
     showMenuOverlay: boolean
-    cart: Object[]
-    checkout: Object[]
+    cart: Product[]
+    checkout: Product[]
 }
 
 const initialState: UserSliceState = {
@@ -19,5 +19,8 @@ export const userSlice = createSlice({
         switchMenuOverlay: (state, action: PayloadAction<boolean>) => {
             state.showMenuOverlay = action.payload
         },
+        addToCart: (state, action: PayloadAction<Product>) => {
+            state.cart.push(action.payload)
+        }
     },
 })
