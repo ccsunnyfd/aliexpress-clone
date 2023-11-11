@@ -17,5 +17,5 @@ export async function GET(request: Request) {
     }
 
     // return the user to an error page with instructions
-    return NextResponse.redirect(`/auth?error=An error occurred when logging in with a third-party account`)
+    return NextResponse.redirect(new URL(`/auth?error=An error occurred when logging in with a third-party account`, request.url))
 }
