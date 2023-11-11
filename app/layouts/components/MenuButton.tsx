@@ -5,7 +5,7 @@ import {
   useSelector,
   userSlice,
   useDispatch,
-} from '@/lib/redux'
+} from '@/utils/redux'
 import { RxHamburgerMenu } from 'react-icons/rx'
 
 const MenuButton = () => {

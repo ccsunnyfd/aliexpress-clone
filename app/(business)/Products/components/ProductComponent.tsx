@@ -32,7 +32,7 @@ const ProductComponent = ({ product }: ProductComponentProps) => {
           hover:shadow-[0_0_10px_3px_rgba(0,0,0,0.15)]
       "
       >
-        <Link href={`/item/${product.id}`}>
+        <Link href={`/items/${product.id}`}>
           <div className="relative h-[200px] max-w-full sm:h-[150px] md:h-[165px] lg:h-[150px]">
             <Image
               className="rounded-t"

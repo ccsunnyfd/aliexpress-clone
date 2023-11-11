@@ -4,5 +4,5 @@ interface Product {
     description: string
     url: string
     price: number
-    created_at: Date | null
+    created_at?: Date | null
 }

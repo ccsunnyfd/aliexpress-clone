@@ -5,7 +5,7 @@ import {
   useDispatch,
   useSelector,
   userSlice,
-} from '@/lib/redux'
+} from '@/utils/redux'
 import { useMemo } from 'react'
 
 type CartProps = {

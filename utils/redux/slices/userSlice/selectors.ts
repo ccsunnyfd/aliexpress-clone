@@ -1,5 +1,5 @@
 /* Instruments */
-import type { ReduxState } from '@/lib/redux'
+import type { ReduxState } from '@/utils/redux'
 import { createSelector } from '@reduxjs/toolkit'
 
 // The function below is called a selector and allows us to select a value from

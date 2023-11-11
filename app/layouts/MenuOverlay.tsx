@@ -5,7 +5,7 @@ import {
   useDispatch,
   useSelector,
   userSlice,
-} from '@/lib/redux'
+} from '@/utils/redux'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SlClose } from 'react-icons/sl'

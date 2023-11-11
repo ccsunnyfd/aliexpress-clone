@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
-import TextInput from '../components/TextInput'
+import TextInput from '../../components/TextInput'
 
 const Page = () => {
   const [isWorking, setIsWorking] = useState<boolean>(false)

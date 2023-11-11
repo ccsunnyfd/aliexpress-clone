@@ -1,12 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Providers } from '@/lib/providers'
 import './globals.css'
-import TopMenu from './layouts/TopMenu'
-import MainHeader from './layouts/MainHeader'
-import Footer from './layouts/Footer'
-import MenuOverlay from './layouts/MenuOverlay'
-import AuthOverlay from './auth/Overlay'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,22 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          <div className="fixed z-[-1] h-[100vh] w-full bg-[#F2F2F2]" />
-          <div className="fixed top-0 z-50 w-full">
-            <TopMenu />
-            <MainHeader />
-          </div>
-          <MenuOverlay />
-          <div className=" pt-[80px] md:pt-[130px] lg:pt-[150px] ">
-            {children}
-          </div>
-          <Footer />
-
-          <AuthOverlay />
-        </Providers>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
