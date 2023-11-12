@@ -10,10 +10,8 @@ export async function middleware(request: NextRequest) {
         // Refresh session if expired - required for Server Components
         const { data, error } = await supabase.auth.getSession()
 
-        const user = null
-
         // if user is signed in and the current path is /auth redirect the user to /
-        if (user && request.nextUrl.pathname === '/auth') {
+        if (!error && data?.session && request.nextUrl.pathname === '/auth') {
             return NextResponse.redirect(new URL('/', request.url))
         }
 
