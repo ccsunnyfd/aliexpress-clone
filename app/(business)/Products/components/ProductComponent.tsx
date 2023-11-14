@@ -3,17 +3,7 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import { MdStarRate } from 'react-icons/md'
 
-type ProductComponentProps = {
-  product: {
-    id: number
-    title: string
-    description: string
-    url: string
-    price: number
-  }
-}
-
-const ProductComponent = ({ product }: ProductComponentProps) => {
+const ProductComponent = ({ product }: { product: Product }) => {
   const priceComputed = useMemo(() => product.price / 100, [product.price])
 
   const oldPriceComputed = useMemo(
