@@ -3,7 +3,7 @@ import { MdStars } from 'react-icons/md'
 import getProductById from '@/app/third-party-requests/prisma/get-product-by-id'
 import PreviewImages from './components/PreviewImages'
 import { Suspense } from 'react'
-import Cart from './components/Cart'
+import Cart from './components/cart-button'
 
 const Page = async ({ params }: { params: { id: number } }) => {
   const product = await getProductById(Number(params.id))

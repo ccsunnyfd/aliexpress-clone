@@ -12,7 +12,7 @@ type CartProps = {
   product: Product
 }
 
-const Cart = ({ product }: CartProps) => {
+const CartButton = ({ product }: CartProps) => {
   const dispatch = useDispatch()
   const { addToCart } = userSlice.actions
   const cartProducts = useSelector(selectCartProducts)
@@ -45,4 +45,4 @@ const Cart = ({ product }: CartProps) => {
   )
 }
 
-export default Cart
+export default CartButton

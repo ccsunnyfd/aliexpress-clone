@@ -5,4 +5,5 @@ interface Product {
     url: string
     price: number
     created_at?: Date | null
+    amount?: number
 }

@@ -24,7 +24,7 @@ const MainHeader = () => {
           <SearchHintComp />
         </div>
 
-        <Link href="/shoppingcart" className="flex items-center">
+        <Link href="/carts" className="flex items-center">
           <CartItem />
         </Link>
         <MenuButton />

@@ -1,23 +1,29 @@
+'use client'
+
 import { useCallback, useState } from 'react'
 import Image from 'next/image'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
 type CartItemProps = {
   product: Product
-  onSelectedRadio: () => void
+  onSelect: (product: Product, isSelected: boolean) => void
+  onRemove: (productId: number, isSelected: boolean) => void
 }
 
-const CartItem = ({ product, onSelectedRadio }: CartItemProps) => {
+const CartItem = ({ product, onSelect, onRemove }: CartItemProps) => {
   const [isSelected, setIsSelected] = useState(false)
 
-  const removeFromCart = useCallback(() => {}, [])
+  const radioClickedHandler = useCallback(() => {
+    onSelect(product, !isSelected)
+    setIsSelected((prev) => !prev)
+  }, [isSelected, onSelect, product])
 
   return (
     <div className="my-2 flex justify-start">
       <div className="my-auto">
         <div className="group flex cursor-pointer items-center justify-start p-0.5">
           <div
-            onClick={() => setIsSelected((prev) => !prev)}
+            onClick={() => radioClickedHandler()}
             className={`ml-2 mr-5
                flex h-[20px] w-[20px] items-center justify-center
                 rounded-full border border-gray-300 group-hover:border-[#FD374F] ${
@@ -49,7 +55,7 @@ const CartItem = ({ product, onSelectedRadio }: CartItemProps) => {
             <div className="truncate sm:pl-2">{product.title}</div>
           </div>
           <button
-            onClick={() => removeFromCart()}
+            onClick={() => onRemove(product.id, isSelected)}
             className="mx-3 -mt-0.5 hidden hover:text-red-500 sm:block"
           >
             <RiDeleteBin6Line className="text-[20px]" />
@@ -69,8 +75,9 @@ const CartItem = ({ product, onSelectedRadio }: CartItemProps) => {
         </p>
 
         <div className="flex items-center justify-end">
+          <span>x {product.amount}</span>
           <button
-            onClick={() => removeFromCart()}
+            onClick={() => onRemove(product.id, isSelected)}
             className="-mt-0.5 block hover:text-red-500 sm:hidden"
           >
             <RiDeleteBin6Line className="text-[20px]" />
