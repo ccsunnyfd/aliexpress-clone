@@ -5,24 +5,32 @@ import { MdKeyboardArrowDown } from 'react-icons/md'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { type User } from '@supabase/supabase-js'
 import { usePathname } from 'next/navigation'
+import {
+  selectIsLoggedIn,
+  useDispatch,
+  useSelector,
+  userSlice,
+} from '@/utils/redux'
 
 const AccountDropMenu = () => {
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const { setIsLoggedIn } = userSlice.actions
+
   const currentPath = usePathname()
   const [showAccountMenu, setShowAccountMenu] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
 
   const supabase = createClient()
 
   const fetchUser = useCallback(async () => {
-    const { data, error } = await supabase.auth.getUser()
+    const { error } = await supabase.auth.getUser()
     if (!error) {
-      setUser(data.user)
+      await dispatch(setIsLoggedIn(true))
     } else {
-      setUser(null)
+      await dispatch(setIsLoggedIn(false))
     }
-  }, [supabase.auth])
+  }, [dispatch, setIsLoggedIn, supabase.auth])
 
   useEffect(() => {
     fetchUser()
@@ -30,8 +38,8 @@ const AccountDropMenu = () => {
 
   const logout = useCallback(async () => {
     await supabase?.auth.signOut()
-    setUser(null)
-  }, [supabase?.auth])
+    await dispatch(setIsLoggedIn(false))
+  }, [dispatch, setIsLoggedIn, supabase?.auth])
 
   return (
     <div
@@ -51,7 +59,7 @@ const AccountDropMenu = () => {
           id="AccountMenu"
           className="absolute -left-[100px] top-[38px] z-40 w-[220px] border-x border-b bg-white text-[#333333]"
         >
-          {!user && (
+          {!isLoggedIn && (
             <div>
               <div className="text-semibold my-4 px-3 text-[15px]">
                 Welcome to AliExpress!
@@ -67,7 +75,7 @@ const AccountDropMenu = () => {
             </div>
           )}
           <div className="border-b" />
-          {user && (
+          {isLoggedIn && (
             <ul className="bg-white ">
               <Link href="/carts">
                 <li className="w-full px-4 py-2 text-[13px] hover:bg-gray-200">

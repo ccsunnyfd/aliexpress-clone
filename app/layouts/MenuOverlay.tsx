@@ -1,6 +1,8 @@
 'use client'
 
 import {
+  selectCartProducts,
+  selectIsLoggedIn,
   selectShowMenuOverlay,
   useDispatch,
   useSelector,
@@ -13,11 +15,32 @@ import { PiPenThin } from 'react-icons/pi'
 import { PiShoppingCartSimpleThin } from 'react-icons/pi'
 import { PiSignInThin } from 'react-icons/pi'
 import { PiSignOutThin } from 'react-icons/pi'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect } from 'react'
+import { createClient } from '@/utils/supabase/client'
 
 const MenuOverlay = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const showMenuOverlay = useSelector(selectShowMenuOverlay)
-  const { switchMenuOverlay } = userSlice.actions
+  const cartProducts = useSelector(selectCartProducts)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const { switchMenuOverlay, setIsLoggedIn } = userSlice.actions
+
+  const supabase = createClient()
+
+  const fetchUser = useCallback(async () => {
+    const { error } = await supabase.auth.getUser()
+    if (!error) {
+      await dispatch(setIsLoggedIn(true))
+    } else {
+      await dispatch(setIsLoggedIn(false))
+    }
+  }, [dispatch, setIsLoggedIn, supabase.auth])
+
+  useEffect(() => {
+    fetchUser()
+  }, [fetchUser])
 
   return (
     <>
@@ -63,8 +86,10 @@ const MenuOverlay = () => {
           <div className="flex items-center justify-between pt-5">
             <ul className="w-full">
               <li
-                onClick={() => {}}
-                // @click="goTo('orders')"
+                onClick={() => {
+                  dispatch(switchMenuOverlay(false))
+                  router.push('/orders')
+                }}
                 className="
                         relative 
                         flex 
@@ -84,8 +109,10 @@ const MenuOverlay = () => {
               </li>
 
               <li
-                onClick={() => {}}
-                // @click="goTo('shoppingcart')"
+                onClick={() => {
+                  dispatch(switchMenuOverlay(false))
+                  router.push('/carts')
+                }}
                 className="
                         relative 
                         flex 
@@ -115,16 +142,18 @@ const MenuOverlay = () => {
                             text-white
                         "
                 >
-                  {/* {{ userStore.cart.length }} */}
-                  14
+                  {cartProducts.length}
                 </div>
               </li>
 
-              <li
-                // v-if="user"
-                onClick={() => {}}
-                // @click="signOut()"
-                className="
+              {isLoggedIn ? (
+                <li
+                  onClick={async () => {
+                    await supabase.auth.signOut()
+                    dispatch(switchMenuOverlay(false))
+                    await dispatch(setIsLoggedIn(false))
+                  }}
+                  className="
                         relative 
                         flex 
                         cursor-pointer 
@@ -135,18 +164,19 @@ const MenuOverlay = () => {
                         py-2.5 
                         hover:bg-gray-100
                     "
-              >
-                <div className=" flex items-center text-[20px] font-semibold">
-                  <PiSignOutThin className="text-[33px]" />
-                  <span className="pl-4">Sign out</span>
-                </div>
-              </li>
-
-              <li
-                // v-else
-                onClick={() => {}}
-                // @click="signIn()"
-                className="
+                >
+                  <div className=" flex items-center text-[20px] font-semibold">
+                    <PiSignOutThin className="text-[33px]" />
+                    <span className="pl-4">Sign out</span>
+                  </div>
+                </li>
+              ) : (
+                <li
+                  onClick={() => {
+                    dispatch(switchMenuOverlay(false))
+                    router.push('/auth')
+                  }}
+                  className="
                         relative 
                         flex 
                         cursor-pointer 
@@ -157,12 +187,13 @@ const MenuOverlay = () => {
                         py-2.5 
                         hover:bg-gray-100
                     "
-              >
-                <div className=" flex items-center text-[20px] font-semibold">
-                  <PiSignInThin className="text-[33px]" />
-                  <span className="pl-4">Sign in / Register</span>
-                </div>
-              </li>
+                >
+                  <div className=" flex items-center text-[20px] font-semibold">
+                    <PiSignInThin className="text-[33px]" />
+                    <span className="pl-4">Sign in / Register</span>
+                  </div>
+                </li>
+              )}
             </ul>
           </div>
         </div>
