@@ -13,10 +13,11 @@ import Image from 'next/image'
 import { SlClose } from 'react-icons/sl'
 import { PiPenThin } from 'react-icons/pi'
 import { PiShoppingCartSimpleThin } from 'react-icons/pi'
+import { AiOutlineLoading } from 'react-icons/ai'
 import { PiSignInThin } from 'react-icons/pi'
 import { PiSignOutThin } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
 const MenuOverlay = () => {
@@ -26,6 +27,8 @@ const MenuOverlay = () => {
   const cartProducts = useSelector(selectCartProducts)
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const { switchMenuOverlay, setIsLoggedIn } = userSlice.actions
+
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
 
   const supabase = createClient()
 
@@ -149,9 +152,16 @@ const MenuOverlay = () => {
               {isLoggedIn ? (
                 <li
                   onClick={async () => {
-                    await supabase.auth.signOut()
-                    dispatch(switchMenuOverlay(false))
-                    await dispatch(setIsLoggedIn(false))
+                    setIsLoggingOut(true)
+                    try {
+                      await supabase.auth.signOut()
+                      await dispatch(setIsLoggedIn(false))
+                      await dispatch(switchMenuOverlay(false))
+                    } catch (e) {
+                      console.log(e)
+                    } finally {
+                      setIsLoggingOut(false)
+                    }
                   }}
                   className="
                         relative 
@@ -166,8 +176,14 @@ const MenuOverlay = () => {
                     "
                 >
                   <div className=" flex items-center text-[20px] font-semibold">
-                    <PiSignOutThin className="text-[33px]" />
-                    <span className="pl-4">Sign out</span>
+                    {isLoggingOut ? (
+                      <AiOutlineLoading className="mr-2 animate-spin text-[13px]" />
+                    ) : (
+                      <>
+                        <PiSignOutThin className="text-[33px]" />
+                        <span className="pl-4">Sign out</span>
+                      </>
+                    )}
                   </div>
                 </li>
               ) : (

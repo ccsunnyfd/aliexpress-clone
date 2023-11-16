@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { usePathname } from 'next/navigation'
+import { AiOutlineLoading } from 'react-icons/ai'
 import {
   selectIsLoggedIn,
   useDispatch,
@@ -19,7 +20,8 @@ const AccountDropMenu = () => {
   const { setIsLoggedIn } = userSlice.actions
 
   const currentPath = usePathname()
-  const [showAccountMenu, setShowAccountMenu] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] = useState<boolean>(false)
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
 
   const supabase = createClient()
 
@@ -37,8 +39,15 @@ const AccountDropMenu = () => {
   }, [fetchUser])
 
   const logout = useCallback(async () => {
-    await supabase?.auth.signOut()
-    await dispatch(setIsLoggedIn(false))
+    setIsLoggingOut(true)
+    try {
+      await supabase?.auth.signOut()
+      await dispatch(setIsLoggedIn(false))
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setIsLoggingOut(false)
+    }
   }, [dispatch, setIsLoggedIn, supabase?.auth])
 
   return (
@@ -82,12 +91,18 @@ const AccountDropMenu = () => {
                   My Orders
                 </li>
               </Link>
-              <li
-                onClick={() => logout()}
-                className="w-full px-4 py-2 text-[13px] hover:bg-gray-200"
-              >
-                Sign out
-              </li>
+              {isLoggingOut ? (
+                <li className="w-full px-4 py-2">
+                  <AiOutlineLoading className="mr-2 animate-spin text-[13px]" />
+                </li>
+              ) : (
+                <li
+                  onClick={() => logout()}
+                  className="w-full px-4 py-2 text-[13px] hover:bg-gray-200"
+                >
+                  Sign out
+                </li>
+              )}
             </ul>
           )}
         </div>
