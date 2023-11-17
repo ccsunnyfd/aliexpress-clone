@@ -1,8 +1,8 @@
 import { Providers } from '@/utils/providers'
-import TopMenu from '../layouts/TopMenu'
-import MainHeader from '../layouts/MainHeader'
+import TopMenu from '../layouts/top-menu'
+import MainHeader from '../layouts/main-header'
 import Footer from '../layouts/Footer'
-import MenuOverlay from '../layouts/MenuOverlay'
+import MenuOverlay from '../layouts/menu-overlay'
 
 export default function RootLayout({
   children,

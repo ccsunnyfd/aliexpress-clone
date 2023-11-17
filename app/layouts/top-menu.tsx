@@ -1,5 +1,5 @@
 import { MdInstallMobile } from 'react-icons/md'
-import AccountDropMenu from '@/app/layouts/components/AccountDropMenu'
+import AccountDropMenu from '@/app/layouts/components/account-drop-menu'
 
 const TopMenu = () => {
   return (

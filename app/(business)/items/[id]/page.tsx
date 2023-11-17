@@ -1,7 +1,7 @@
 import { MdStarRate } from 'react-icons/md'
 import { MdStars } from 'react-icons/md'
 import getProductById from '@/app/third-party-requests/prisma/get-product-by-id'
-import PreviewImages from './components/PreviewImages'
+import PreviewImages from './components/preview-images'
 import { Suspense } from 'react'
 import Cart from './components/cart-button'
 

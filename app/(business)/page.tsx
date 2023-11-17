@@ -1,5 +1,5 @@
 import getAllProducts from '../third-party-requests/prisma/get-all-products'
-import ProductComponent from './Products/components/ProductComponent'
+import ProductComponent from './Products/components/product-component'
 
 export default async function Home() {
   const products = await getAllProducts()

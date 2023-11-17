@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { AiOutlinePlus, AiOutlineLoading } from 'react-icons/ai'
-import CheckoutItem from './components/CheckoutItem'
+import CheckoutItem from './components/checkout-item'
 
 const Page = () => {
   const currentAddress = useState<Address | null>(null)

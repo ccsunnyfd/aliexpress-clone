@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import CartItem from './components/CartItem'
+import CartItem from './components/cart-item'
 import {
   selectCartProducts,
   useDispatch,

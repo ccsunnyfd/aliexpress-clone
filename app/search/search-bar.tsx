@@ -7,14 +7,14 @@ import { PiMagnifyingGlass } from 'react-icons/pi'
 type SearchItemProps = {
   searchText: string
   searchTextChangeHandler: React.ChangeEventHandler<HTMLInputElement>
+  isSearching: boolean
 }
 
 const SearchBar = ({
   searchText,
   searchTextChangeHandler,
+  isSearching,
 }: SearchItemProps) => {
-  const [isSearching, setIsSearching] = useState(false)
-
   return (
     <div className="flex w-full items-center rounded-md border-2 border-[#FF4646]">
       <input

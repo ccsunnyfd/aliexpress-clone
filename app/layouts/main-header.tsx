@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import CartItem from './components/CartButton'
-import MenuButton from './components/MenuButton'
-import SearchHintComp from './components/SearchHintComp'
+import CartButton from './components/cart-button'
+import MenuButton from './components/menu-button'
+import SearchHintComp from '../search/search-hint-comp'
 
 const MainHeader = () => {
   return (
@@ -25,7 +25,7 @@ const MainHeader = () => {
         </div>
 
         <Link href="/carts" className="flex items-center">
-          <CartItem />
+          <CartButton />
         </Link>
         <MenuButton />
       </div>
