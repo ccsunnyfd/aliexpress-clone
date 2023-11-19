@@ -33,11 +33,15 @@ const MenuOverlay = () => {
   const supabase = createClient()
 
   const fetchUser = useCallback(async () => {
-    const { error } = await supabase.auth.getUser()
-    if (!error) {
-      await dispatch(setIsLoggedIn(true))
-    } else {
-      await dispatch(setIsLoggedIn(false))
+    try {
+      const { error } = await supabase.auth.getUser()
+      if (!error) {
+        await dispatch(setIsLoggedIn(true))
+      } else {
+        await dispatch(setIsLoggedIn(false))
+      }
+    } catch (e) {
+      console.log(e)
     }
   }, [dispatch, setIsLoggedIn, supabase.auth])
 

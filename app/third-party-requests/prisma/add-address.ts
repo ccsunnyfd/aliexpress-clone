@@ -11,16 +11,21 @@ type AddressData = {
 }
 
 export default async function addAddress(addressData: AddressData) {
-  const res = await prisma.addresses.create({
-    data: {
-      userId: addressData.userId,
-      name: addressData.name,
-      address: addressData.address,
-      zipcode: addressData.zipcode,
-      city: addressData.city,
-      country: addressData.country,
-    }
-  })
+  let res: Address | null = null
+  try {
+    res = await prisma.addresses.create({
+      data: {
+        userId: addressData.userId,
+        name: addressData.name,
+        address: addressData.address,
+        zipcode: addressData.zipcode,
+        city: addressData.city,
+        country: addressData.country,
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  }
 
   return res
 }

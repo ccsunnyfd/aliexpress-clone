@@ -10,16 +10,21 @@ type AddressData = {
 }
 
 export default async function updateAddress(id: number, addressData: AddressData) {
-  const res = await prisma.addresses.update({
-    where: { id: id },
-    data: {
-      name: addressData.name,
-      address: addressData.address,
-      zipcode: addressData.zipcode,
-      city: addressData.city,
-      country: addressData.country,
-    }
-  })
+  let res: Address | null = null
+  try {
+    res = await prisma.addresses.update({
+      where: { id: id },
+      data: {
+        name: addressData.name,
+        address: addressData.address,
+        zipcode: addressData.zipcode,
+        city: addressData.city,
+        country: addressData.country,
+      }
+    })
+  } catch (e) {
+    console.log(e)
+  }
 
   return res
 }

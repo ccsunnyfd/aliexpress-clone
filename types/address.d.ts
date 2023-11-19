@@ -5,4 +5,5 @@ interface Address {
     zipcode: string
     city: string
     country: string
+    createdAt?: Date
 }

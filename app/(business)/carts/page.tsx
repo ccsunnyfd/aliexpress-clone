@@ -19,11 +19,15 @@ const Page = () => {
   const supabase = createClient()
 
   const fetchUser = useCallback(async () => {
-    const { data, error } = await supabase.auth.getUser()
-    if (!error) {
-      setUser(data.user)
-    } else {
-      setUser(null)
+    try {
+      const { data, error } = await supabase.auth.getUser()
+      if (!error) {
+        setUser(data.user)
+      } else {
+        setUser(null)
+      }
+    } catch (e) {
+      console.log(e)
     }
   }, [supabase.auth])
 

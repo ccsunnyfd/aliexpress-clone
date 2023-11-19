@@ -11,14 +11,14 @@ export async function middleware(request: NextRequest) {
         const { data, error } = await supabase.auth.getSession()
 
         // if user is signed in and the current path is /auth redirect the user to /
-        if (!error && data?.session && request.nextUrl.pathname === '/auth') {
+        if (request.nextUrl.pathname === '/auth' && !error && data?.session) {
             return NextResponse.redirect(new URL('/', request.url))
         }
 
-        // // if user is not signed in and the current path is not /auth redirect the user to /auth
-        // if (!user && req.nextUrl.pathname === '/') {
-        //     return NextResponse.redirect(new URL('/auth', req.url))
-        // }
+        // if user is not signed in and the current path is not /auth redirect the user to /auth
+        if (request.nextUrl.pathname === '/checkout' && (error || !data?.session)) {
+            return NextResponse.redirect(new URL(`/auth?next=${new URL(request.nextUrl.pathname, request.url)}`, request.url))
+        }
 
         return response
     } catch (e) {
@@ -35,5 +35,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/', '/auth'],
+    matcher: ['/auth', '/checkout'],
 }

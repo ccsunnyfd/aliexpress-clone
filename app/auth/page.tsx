@@ -3,20 +3,27 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { type Provider } from '@supabase/supabase-js'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
-const Page = ({ searchParams }: { searchParams: { error: string } }) => {
-  const login = useCallback(async (provider: Provider) => {
-    const supabase = createClient()
+const Page = ({
+  searchParams,
+}: {
+  searchParams: { error: string; next: string }
+}) => {
+  const login = useCallback(
+    async (provider: Provider) => {
+      const supabase = createClient()
 
-    await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options: {
-        redirectTo: `http://localhost:3000/auth/callback`,
-      },
-    })
-  }, [])
+      await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: `http://localhost:3000/auth/callback?next=${searchParams.next}`,
+        },
+      })
+    },
+    [searchParams.next]
+  )
 
   return (
     <>

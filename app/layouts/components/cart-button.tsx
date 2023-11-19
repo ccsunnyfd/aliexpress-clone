@@ -1,6 +1,11 @@
+'use client'
+
+import { selectCartProducts, useSelector } from '@/utils/redux'
 import { PiShoppingCartSimpleLight } from 'react-icons/pi'
 
 const CartButton = () => {
+  const cartProducts = useSelector(selectCartProducts)
+
   return (
     <button className="group relative hidden md:block">
       <span
@@ -20,8 +25,7 @@ const CartButton = () => {
             text-white
         "
       >
-        {/* {{ userStore.cart.length }} */}
-        14
+        {cartProducts.length}
       </span>
       <div className="min-w-[40px]">
         <PiShoppingCartSimpleLight className="text-[33px] group-hover:text-[#FF4646]" />
