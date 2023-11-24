@@ -12,8 +12,10 @@ import {
 } from '@/utils/redux'
 import { createClient } from '@/utils/supabase/client'
 import { type User } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation'
 
 const Page = () => {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
 
   const supabase = createClient()
@@ -40,7 +42,7 @@ const Page = () => {
   const [selectedItems, setSelectedItems] = useState<Product[]>([])
 
   const dispatch = useDispatch()
-  const { deleteFromCart } = userSlice.actions
+  const { deleteFromCart, addToCheckout } = userSlice.actions
   const cartProducts = useSelector(selectCartProducts)
 
   const itemSelectedhandler = useCallback(
@@ -74,7 +76,16 @@ const Page = () => {
     return total / 100
   }, [selectedItems])
 
-  const goToCheckout = useCallback(() => {}, [])
+  const goToCheckout = useCallback(() => {
+    // add selectedItems to userStore.checkout
+    dispatch(addToCheckout(selectedItems))
+
+    // remove selectedItems from userStore.cart
+    selectedItems.forEach((item) => dispatch(deleteFromCart(item.id)))
+
+    // navigate to '/checkout'
+    router.push('/checkout')
+  }, [addToCheckout, deleteFromCart, dispatch, router, selectedItems])
 
   return (
     <>

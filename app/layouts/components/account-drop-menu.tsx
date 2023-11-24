@@ -29,9 +29,9 @@ const AccountDropMenu = () => {
     try {
       const { error } = await supabase.auth.getUser()
       if (!error) {
-        await dispatch(setIsLoggedIn(true))
+        dispatch(setIsLoggedIn(true))
       } else {
-        await dispatch(setIsLoggedIn(false))
+        dispatch(setIsLoggedIn(false))
       }
     } catch (e) {
       console.log(e)
@@ -46,7 +46,7 @@ const AccountDropMenu = () => {
     setIsLoggingOut(true)
     try {
       await supabase?.auth.signOut()
-      await dispatch(setIsLoggedIn(false))
+      dispatch(setIsLoggedIn(false))
     } catch (e) {
       console.log(e)
     } finally {

@@ -36,6 +36,9 @@ export const userSlice = createSlice({
         },
         deleteFromCart: (state, action: PayloadAction<Number>) => {
             state.cart = state.cart.filter((prod) => prod.id !== action.payload)
+        },
+        addToCheckout: (state, action: PayloadAction<Product[]>) => {
+            state.checkout.push(...action.payload)
         }
     },
 })

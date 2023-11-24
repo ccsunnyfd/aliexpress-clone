@@ -28,6 +28,7 @@ const CheckoutItem = ({ product }: CheckoutItemProps) => {
         <div className="mt-2 text-lg font-semibold">
           $ <span className="font-bold">{product.price / 100}</span>
         </div>
+        <span>x {product.amount}</span>
       </div>
     </div>
   )

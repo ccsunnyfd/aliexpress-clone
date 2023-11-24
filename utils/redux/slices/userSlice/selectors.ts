@@ -8,3 +8,4 @@ import { createSelector } from '@reduxjs/toolkit'
 export const selectIsLoggedIn = (state: ReduxState) => state.user.isLoggedIn
 export const selectShowMenuOverlay = (state: ReduxState) => state.user.showMenuOverlay
 export const selectCartProducts = (state: ReduxState) => state.user.cart
+export const selectCheckout = (state: ReduxState) => state.user.checkout

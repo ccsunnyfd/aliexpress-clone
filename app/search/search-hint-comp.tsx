@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useDebounce } from 'use-debounce'
 
 async function requestSearch(text: string) {
-  const res = await fetch(`/search/callback?search=${text}`, {
+  const res = await fetch(`/search/api?search=${text}`, {
     method: 'POST',
   })
   return res.json()

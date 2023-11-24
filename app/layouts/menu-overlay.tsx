@@ -36,9 +36,9 @@ const MenuOverlay = () => {
     try {
       const { error } = await supabase.auth.getUser()
       if (!error) {
-        await dispatch(setIsLoggedIn(true))
+        dispatch(setIsLoggedIn(true))
       } else {
-        await dispatch(setIsLoggedIn(false))
+        dispatch(setIsLoggedIn(false))
       }
     } catch (e) {
       console.log(e)
@@ -159,8 +159,8 @@ const MenuOverlay = () => {
                     setIsLoggingOut(true)
                     try {
                       await supabase.auth.signOut()
-                      await dispatch(setIsLoggedIn(false))
-                      await dispatch(switchMenuOverlay(false))
+                      dispatch(setIsLoggedIn(false))
+                      dispatch(switchMenuOverlay(false))
                     } catch (e) {
                       console.log(e)
                     } finally {
