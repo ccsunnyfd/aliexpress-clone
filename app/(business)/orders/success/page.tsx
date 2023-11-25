@@ -8,7 +8,7 @@ const page = () => {
     >
       <div className="min-h-[150px] w-full bg-white p-6">
         <div className="flex items-center text-xl">
-          <CiCircleCheck className="text-[35px] text-[#cb3904]" />
+          <CiCircleCheck className="text-[35px] text-[#5FCB04]" />
           <span className="pl-4">Payment Successful</span>
         </div>
         <p className="pl-[50px] text-sm">

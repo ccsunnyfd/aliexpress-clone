@@ -8,7 +8,7 @@ const page = ({ searchParams }: { searchParams: { error: string } }) => {
     >
       <div className="min-h-[150px] w-full bg-white p-6">
         <div className="flex items-center text-xl">
-          <VscError className="text-[35px] text-[#5FCB04]" />
+          <VscError className="text-[35px] text-[#cb3904]" />
           <span className="pl-4">{searchParams.error} Failure</span>
         </div>
         <p className="pl-[50px] text-sm">
