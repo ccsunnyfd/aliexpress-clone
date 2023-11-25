@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
         }
 
         // if user is not signed in and the current path is not /auth redirect the user to /auth
-        if (request.nextUrl.pathname === '/checkout' && (error || !data?.session)) {
+        if ((request.nextUrl.pathname === '/checkout' || request.nextUrl.pathname === '/orders') && (error || !data?.session)) {
             return NextResponse.redirect(new URL(`/auth?next=${new URL(request.nextUrl.pathname, request.url)}`, request.url))
         }
 
@@ -35,5 +35,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/auth', '/checkout'],
+    matcher: ['/auth', '/checkout', '/orders'],
 }

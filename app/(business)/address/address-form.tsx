@@ -5,15 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { submitAddress } from './actions'
 
 type AddressFormProps = {
-  initValue: {
-    id: number
-    name: string
-    address: string
-    zipcode: string
-    city: string
-    country: string
-    created_at: Date | null
-  } | null
+  initValue: Address | null
 }
 
 const initialState = {

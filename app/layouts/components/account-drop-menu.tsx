@@ -90,7 +90,7 @@ const AccountDropMenu = () => {
           <div className="border-b" />
           {isLoggedIn && (
             <ul className="bg-white ">
-              <Link href="/carts">
+              <Link href="/orders">
                 <li className="w-full px-4 py-2 text-[13px] hover:bg-gray-200">
                   My Orders
                 </li>

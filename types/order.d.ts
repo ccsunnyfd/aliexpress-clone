@@ -10,4 +10,9 @@ interface Order {
     country: string;
     paid: boolean;
     created_at: Date | null;
+    orderItem?: {
+        orderId: number
+        productId: number
+        product: Product
+    }[]
 }
