@@ -1,5 +1,8 @@
 import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
+import createOrder from '@/app/third-party-requests/prisma/add-order'
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
 
 const calculateOrderAmount = (items: Product[]) => {
     // Calculate the order total on the server to prevent
@@ -26,11 +29,27 @@ export async function POST(request: Request) {
         },
     })
 
-    // Create Unpayed Order first
-    // TODO
+    // Create Unpaid Order first
+    const supabase = createClient(cookies())
+    const { data: userData, error } = await supabase.auth.getUser()
+
+    if (error || !userData?.user) {
+        return NextResponse.json({
+            message: 'Cannot get user session info'
+        })
+    }
+
+
+    try {
+        await createOrder(userData.user.id, paymentIntent.id, currentAddress, items)
+    } catch (e) {
+        console.log(e)
+        return NextResponse.json({
+            message: 'Cannot create order'
+        })
+    }
 
     return NextResponse.json({
         clientSecret: paymentIntent.client_secret,
     })
-
 }

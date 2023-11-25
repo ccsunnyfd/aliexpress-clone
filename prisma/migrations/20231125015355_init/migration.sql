@@ -22,6 +22,7 @@ CREATE TABLE "Orders" (
     "zipcode" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "country" TEXT NOT NULL,
+    "paid" BOOLEAN NOT NULL,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
