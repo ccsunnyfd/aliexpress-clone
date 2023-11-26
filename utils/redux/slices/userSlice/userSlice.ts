@@ -39,6 +39,9 @@ export const userSlice = createSlice({
         },
         addToCheckout: (state, action: PayloadAction<Product[]>) => {
             state.checkout.push(...action.payload)
+        },
+        clearCheckout: (state) => {
+            state.checkout = []
         }
     },
 })

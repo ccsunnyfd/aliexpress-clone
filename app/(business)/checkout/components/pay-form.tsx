@@ -4,6 +4,7 @@ import { AiOutlineLoading } from 'react-icons/ai'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { type StripePaymentElementOptions } from '@stripe/stripe-js'
 import { type FormEvent, useEffect, useState } from 'react'
+import { useDispatch, userSlice } from '@/utils/redux'
 
 type PayFormProps = {
   onErrorMessage: (message: string) => void
@@ -13,6 +14,9 @@ const PayForm = ({ onErrorMessage }: PayFormProps) => {
   const stripe = useStripe()
   const elements = useElements()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const dispatch = useDispatch()
+  const { clearCheckout } = userSlice.actions
 
   useEffect(() => {
     if (!stripe) {
@@ -57,6 +61,9 @@ const PayForm = ({ onErrorMessage }: PayFormProps) => {
     setIsLoading(true)
 
     const { protocol, host } = window.location
+
+    // clear checkout list
+    dispatch(clearCheckout())
 
     const { error } = await stripe.confirmPayment({
       elements,
