@@ -16,11 +16,13 @@ import { PiShoppingCartSimpleThin } from 'react-icons/pi'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { PiSignInThin } from 'react-icons/pi'
 import { PiSignOutThin } from 'react-icons/pi'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
 const MenuOverlay = () => {
+  const [domainName, setDomainName] = useState<string | null>(null)
+  const currentPath = usePathname()
   const router = useRouter()
   const dispatch = useDispatch()
   const showMenuOverlay = useSelector(selectShowMenuOverlay)
@@ -44,6 +46,11 @@ const MenuOverlay = () => {
       console.log(e)
     }
   }, [dispatch, setIsLoggedIn, supabase.auth])
+
+  useEffect(() => {
+    const { protocol, host } = window.location
+    setDomainName(protocol + '//' + host)
+  }, [])
 
   useEffect(() => {
     fetchUser()
@@ -194,7 +201,7 @@ const MenuOverlay = () => {
                 <li
                   onClick={() => {
                     dispatch(switchMenuOverlay(false))
-                    router.push('/auth')
+                    router.push(`/auth?next=${domainName}${currentPath}`)
                   }}
                   className="
                         relative 

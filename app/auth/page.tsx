@@ -14,11 +14,12 @@ const Page = ({
   const login = useCallback(
     async (provider: Provider) => {
       const supabase = createClient()
+      const { protocol, host } = window.location
 
       await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: `http://localhost:3000/auth/callback?next=${searchParams.next}`,
+          redirectTo: `${protocol}//${host}/auth/callback?next=${searchParams.next}`,
         },
       })
     },
