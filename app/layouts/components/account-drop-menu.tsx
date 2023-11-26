@@ -15,6 +15,8 @@ import {
 } from '@/utils/redux'
 
 const AccountDropMenu = () => {
+  const [domainName, setDomainName] = useState<string | null>(null)
+
   const dispatch = useDispatch()
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const { setIsLoggedIn } = userSlice.actions
@@ -37,6 +39,11 @@ const AccountDropMenu = () => {
       console.log(e)
     }
   }, [dispatch, setIsLoggedIn, supabase.auth])
+
+  useEffect(() => {
+    const { protocol, host } = window.location
+    setDomainName(protocol + '//' + host)
+  }, [])
 
   useEffect(() => {
     fetchUser()
@@ -79,7 +86,7 @@ const AccountDropMenu = () => {
               </div>
               <div className="mb-3 flex items-center gap-1 px-3">
                 <Link
-                  href={`/auth?next=${currentPath}`}
+                  href={`/auth?next=${domainName}${currentPath}`}
                   className="w-full rounded-sm bg-[#FF4646] p-2 text-center text-[16px] font-semibold text-white"
                 >
                   Login / Register
